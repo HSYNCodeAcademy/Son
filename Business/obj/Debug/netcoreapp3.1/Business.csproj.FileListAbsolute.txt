@@ -1,0 +1,13 @@
+C:\Users\Huseyn\Desktop\New folder (2)\FiorelloHomeWork\EduhomePraktika.1\Business\bin\Debug\netcoreapp3.1\Business.deps.json
+C:\Users\Huseyn\Desktop\New folder (2)\FiorelloHomeWork\EduhomePraktika.1\Business\bin\Debug\netcoreapp3.1\Business.dll
+C:\Users\Huseyn\Desktop\New folder (2)\FiorelloHomeWork\EduhomePraktika.1\Business\bin\Debug\netcoreapp3.1\Business.pdb
+C:\Users\Huseyn\Desktop\New folder (2)\FiorelloHomeWork\EduhomePraktika.1\Business\bin\Debug\netcoreapp3.1\DAL.dll
+C:\Users\Huseyn\Desktop\New folder (2)\FiorelloHomeWork\EduhomePraktika.1\Business\bin\Debug\netcoreapp3.1\DAL.pdb
+C:\Users\Huseyn\Desktop\New folder (2)\FiorelloHomeWork\EduhomePraktika.1\Business\obj\Debug\netcoreapp3.1\Business.csproj.AssemblyReference.cache
+C:\Users\Huseyn\Desktop\New folder (2)\FiorelloHomeWork\EduhomePraktika.1\Business\obj\Debug\netcoreapp3.1\Business.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Huseyn\Desktop\New folder (2)\FiorelloHomeWork\EduhomePraktika.1\Business\obj\Debug\netcoreapp3.1\Business.AssemblyInfoInputs.cache
+C:\Users\Huseyn\Desktop\New folder (2)\FiorelloHomeWork\EduhomePraktika.1\Business\obj\Debug\netcoreapp3.1\Business.AssemblyInfo.cs
+C:\Users\Huseyn\Desktop\New folder (2)\FiorelloHomeWork\EduhomePraktika.1\Business\obj\Debug\netcoreapp3.1\Business.csproj.CoreCompileInputs.cache
+C:\Users\Huseyn\Desktop\New folder (2)\FiorelloHomeWork\EduhomePraktika.1\Business\obj\Debug\netcoreapp3.1\Business.csproj.CopyComplete
+C:\Users\Huseyn\Desktop\New folder (2)\FiorelloHomeWork\EduhomePraktika.1\Business\obj\Debug\netcoreapp3.1\Business.dll
+C:\Users\Huseyn\Desktop\New folder (2)\FiorelloHomeWork\EduhomePraktika.1\Business\obj\Debug\netcoreapp3.1\Business.pdb
