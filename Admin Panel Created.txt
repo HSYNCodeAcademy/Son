@@ -1,0 +1,22 @@
+1) 	Proyektimizde Areas/Admin/Controllers,Views folderleri aciriq.
+	
+	Controllers-de DashboardController.cs aciriq.
+
+	Views- de  Dashboard/Index.cshtml, 
+			Shared/_AdminLayout.cshtml, 
+			_ViewImport.cshtml, 
+			_ViewStart.cshtml (Layout= "_AdminLayout") aciriq.
+
+2) 	Startup-da 
+	
+		endpoints.MapControllerRoute
+		(
+			"default",
+			pattern: "{area}{controller=dashboard}{action=index}{id?}"
+		);
+
+	bu ednpoint-i elave edirik ki saytin root-unda dashboard yazanda dashborada getsin.
+
+3)	_AdminLayout-u doldururuq ve root-larini duzeldirik (href, src, img, ...).
+
+4)	wwwroot/Areas/Admin folderlerinin icinde Admin Panelin her seyini atiriq.

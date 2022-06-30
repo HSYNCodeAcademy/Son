@@ -1,0 +1,84 @@
+DAL proyekti aciriq
+icinde Data folderi onunda icinde AppDbContext class-i aciriq, bu class DbContext-den miras alir ve class-in icinde yaziriq:
+
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
+	Daha sonra class-da modellerimizi DbSet edirik.
+
+-----------
+
+Models folderini aciriq
+icinde BaseEntity ve Modellerimizi saxlasin
+baseEntity-de Id, IsDeleted, CreatedDate ve UpdatedDate olur
+Modelimizde modelimizin prop-larini yaziriq.
+
+----------
+
+appsetting.json-a gedirik ve yaziriq : 
+
+"ConnectionStrings": {
+    "Default": "Server=DESKTOP-P1K31H9;Database=EduhomePraktikaIII;Trusted-Connection=True;"
+  }
+
+--------
+
+Sonra ise startupda yaziriq: 
+
+        private readonly IConfiguration _configuration;
+
+        public Startup(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
+------------
+
+Sonrada Startupda ConfigureService metodunda yaziriq:
+
+            services.AddDbContext<AppDbContext>(options =>
+            {
+                options.UseSqlServer(_configuration.GetConnectionString("Default"),
+                    n=>n.MigrationsAssembly("DAL"));
+            });
+
+----------------
+
+Sonra Migration edirik
+
+---------------
+
+Daha sonra ise SQL-de Modellerimizin Table-lerini doldururq
+
+---------------
+
+HomeController-de yaziriq :
+
+        private readonly AppDbContext _context;
+
+        public HomeController(AppDbContext context)
+        {
+            _context = context;
+        }
+
+Index metodunu asinxron yaziriq: 
+
+        public async Task<IActionResult> Index()
+        {
+            List<Slider> sliders = await _context.Sliders.ToListAsync();
+            return View(sliders);
+        }
+------------------------
+
+Index View-imizde 
+		@model List<Slider> 
+yaziriq. 
+
+Slideri gormeyi ucun ViewImportda 
+		@using DAL.Models; 
+yaziriq
+
+modellerimizi for dovrune saliriq. (i < Model.Count)
+
+Tag-larin arasina yaziriq : @Model.Title, @Model.Body .......
+
+-------------
+

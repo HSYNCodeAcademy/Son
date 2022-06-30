@@ -1,0 +1,118 @@
+1) 	Controllers folderi aciriq ve controller-lerimizi elave edirik,
+		Controller-de Index-e sag klik edib View aciriq;
+
+2)	View folderine Shared/_Layout, _ViewImport, _ViewStart elave edirik;
+
+3)	wwwroot/assets folderi aciriq ve icine proyektimizin (css, img, fonts, js, ...) folderlerini elave edirik;
+
+4)	_Layout-u doldururuq ve path-lari duzeldirik. Daha sonra Index-i doldururuq;
+
+5)	Startup-da 
+		ConfigureServices metoduna services.AddControllersWithViews(),
+		Configure metoduna ise: 
+			
+			app.UseStaticFiles();
+
+			app.UseEndpoints(endpoints =>
+            	{
+                		endpoints.MapControllerRoute
+                		(
+                    		name: "default",
+                    		pattern: "{controller=home}/{action=index}/{id?}"
+                		);
+            	});
+
+	yaziriq.
+
+6)	_Layout-larimizdaki kecid linkleri ucun _ViewImport-a TagHelpers-i elave edirik:
+				(@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+				 @addTagHelper *, AuthoringTagHelpers) 
+
+		ve daha sonra _Layout-da linklerimize 
+
+		asp-area="area-mizin adi", 
+		asp-controller="controller-imizin adi" 
+			ve 
+		asp-action="action-umuzun adi" 	yaziriq.
+
+7)	Model-lerimiz ucun DAL Proyekti aciriq. 
+		Ona Data/AppDbContext.cs elave edirik. 
+			AppDbContext DbContext-den miras alir. Bunun ucunde Microsoft.EntityFrameworkCore extension-unun proyektimize uygun olan versiyasini yukleyirik. 
+
+				Daha sonra DbContetxtOptions<AppDbContext> tipinnen options qebul eden Constructor aciriq, sonra bunu base-e gonderirik (: base(options).
+	
+	Sonra Models folderini aciriq ve proyektimizdeki elementleri(forex: slider, promotions, ...) bura elave edirik. 
+	Butun elementlerimizde olan property-ler ucun DAL proyektinde Base adinda yeni folder aciriq. 
+		Icine BaseEntity.cs class-i ve IEntity.cs interface-si elave edirik.
+		BaseEntity class-inda hemmise
+
+		        public int Id { get; set; }
+		        public bool IsDeleted { get; set; }
+		        public DateTime CreatedDate { get; set; }
+		        public DateTime? UpdatedDate { get; set; }
+
+		property-leri olur.
+
+	Models folderimizdeki elementler BaseEntity ve IEntity-den miras alir.
+		(Qeyd: Acdigimiz class-in database ucun acilmis bir class-oldugunnan emin olmaq ucun IEntity aciriq ve elementimizin class-inda ondan miras aliriq.)
+	Daha sonra BaseEntity-da olmayibda elementimizde olan property-leri elementimize elave edirik (forex :Title, Image, ImageUrl ...)
+
+	Elementlerimizi DbSet edirik: 
+		public DbSet<Filan> Filans { get; set; }
+
+8)	Startup class-inda :
+
+		private readonly IConfiguration _configuration
+
+		public Startup(IConfiguration configuration)
+		{
+			_configuration = configuration;
+		}	
+
+		 ConfigureServices metodunda ise :
+ 
+		services.AddDbContext<AppDbContext>(options =>
+		{
+			options.UseSqlServer(_configuration.GetConnectionString("default"), n=>
+			{
+				n.MigrationAssembly("Proyektimizin adi");
+			});
+		});
+
+		yaziriq.
+ 		
+		Burada AddDbContext-i using etmek ucun Microsoft.EntityFrameworkCore.SqlServer Extension-unu yukleyirik.
+
+		AppDbContext-i using etmek ucun ise referance vermeliyik.
+
+		Migration etmek ucun Microsoft.EntityFrameworkCore.Tools Extension-unu yukleyirik ve Add-Migration InitialMigration edirik.
+
+8) 	Proyektimizde Areas/Admin/Controllers,Views folderleri aciriq.
+	
+	Controllers-de DashboardController.cs aciriq.
+
+	Views- de  Dashboard/Index.cshtml, 
+			Shared/_AdminLayout.cshtml, 
+			_ViewImport.cshtml, 
+			_ViewStart.cshtml (Layout= "_AdminLayout") aciriq.
+
+9) 	Startup-da 
+	
+		endpoints.MapControllerRoute
+                (
+                    name: "admin",
+                    pattern: "{area:exists}/{controller=dashboard}/{action=index}/{id?}"
+                );
+
+	bu ednpoint-i elave edirik ki saytin root-unda dashboard yazanda dashborada getsin.
+	Daha sonra DashboardController.cs-de IActionResult metodunun usdunde [Area("Admin")] yaziriq.
+
+10)	wwwroot/Areas/Admin folderlerinin icinde Admin Panelin her seyini atiriq.
+
+11)	_AdminLayout-u doldururuq ve path-larini duzeldirik (href, src, img, ...)(forex: href="~/areas/admin/css/style.css").
+
+
+
+
+
+ 

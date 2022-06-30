@@ -1,0 +1,92 @@
+Business adinda ClassLibrary folderi aciriq. Icinde Base, Implementations ve Services folderleri aciriq.
+
+	1.=>	Base folderinde generic IBaseService<TEntity>.cs interfacesi aciriq ve yaziriq: 
+		
+			>>	Task<TEntity> Get(int? id); 
+			>>	Task<List<TEntity>> GetAll();
+			>>	Task Create(TEntity entity);
+			>>	Task Update(TEntity entity);
+			>>	Task Delete(int? id);
+	
+			(Qeyd: Butun service-lerimiz bu interface-den miras alacaq.)
+	
+	2.=>	Services folderinde Model-lerimize uygun service-ler aciriq: 
+			>>	IFilanmodelsService.cs (mes: ISlidersService.cs)
+
+		 Bu service-ler aid oldugu Model-in tipinnen generic IBaseService-den miras alir
+			>>	IFilanmodelsService.cs : IBaseService<Filanmodel> (mes: IBaseService<Slider>)
+
+		 Model-imiz DAL proyektinden referans alir ve using edirik.
+
+	3.=>	Implementations folderinde IFilanmodelService.cs-den miras alan FilanmodelRepository.cs class-i aciriq ve 
+		IFilanmodelService-ni implement edirik:
+			>>	FilanmodelRepository : IFilanmodelsService (mes: SliderRepository : ISlidersService)
+
+			FilanmodelRepository class-inda yazirig: 
+			
+				>>	private readonly AppDbContext _context;
+				>>
+        			>>	public SliderRepository(AppDbContext context)
+        			>>	{
+        		    	>>		_context = context;
+        			>>	}
+
+				3.1=> Get metodunda yaziriq:
+
+            			>>	if(id is null)
+            			>>	{
+            			>>	    throw new NotImplementedException();
+            			>>	}
+					>>
+            			>>	var data = await _context.Sliders.Where(n=>!n.IsDeleted && n.Id==id).FirstOrDefaultAsync();
+					>>
+            			>>	if(data is null)
+            			>>	{
+            			>>	    throw new NotImplementedException();
+            			>>	}
+					>>
+            			>>	return data;
+
+				3.2=> GetAll metodunda yaziriq:
+
+            			>>	var  data = await _context.Sliders.Where(n=>!n.IsDeleted).ToListAsync();
+					>>
+            			>>	if (data is null)
+            			>>	{
+            			>>	    throw new NotImplementedException();
+            			>>	}
+					>>
+            			>>	return data;
+
+				3.3=> Create metodunda yaziriq:
+
+            			>>	if (entity is null)
+            			>>	{
+            			>>    throw new NotImplementedException();
+            			>>	}
+					>>
+            			>>	entity.CreatedDate = DateTime.Now;
+            			>>	await _context.Sliders.AddAsync(entity);
+            			>>	await _context.SaveChangesAsync();
+
+				3.4=> Update metodunda yaziriq:
+
+            			>>	if (entity is null)
+            			>>	{
+            			>>	    throw new NotImplementedException();
+            			>>	}
+            			>>	entity.UpdatedDate = DateTime.Now;
+            			>>	_context.Sliders.Update(entity);
+            			>>	await _context.SaveChangesAsync();
+
+				3.5=> Delete metodunda yaziriq:
+
+            			>>	var data = await Get(id);
+            			>>	data.IsDeleted = true;
+            			>>	await Update(data);
+
+	4.=>	Startup-da ConfigureServices metodunda yaziriq:
+			
+			>>	services.AddScoped<ISlidersService, SliderRepository>();
+	
+=====================================================================================================================================			
