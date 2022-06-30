@@ -1,0 +1,48 @@
+﻿@model List<Slider>
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <h1 class="card-title">Sliders</h1>
+                        <div class="d-flex justify-content-end">
+                            <a type="button" class="btn btn-primary mx-3" asp-controller="dashboard" asp-action="index" asp-area="admin">Go Back</a>
+                            <a type="button" class="btn btn-success mx-3" asp-area="admin" asp-controller="slider" asp-action="create">Create</a>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Image</th>
+                                    <th>Title</th>
+                                    <th>Body</th> 
+                                    <th class="d-flex justify-content-center">Settings</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var slider in Model)
+                                {
+                                        <tr>
+                                            <td class="py-1">
+                                                <img src="~/assets/uploads/images/@Html.Raw(slider.ImageURL)" class="img-fluid" alt="">
+                                            </td>
+                                            <td> @Html.Raw(slider.Title) </td>
+                                            <td> @slider.Body </td>
+                                            <td class="btn-group-vertical">
+                                                <a asp-area="admin" asp-controller="slider" asp-action="details" asp-route-id="@slider.Id" class="btn btn-primary rounded my-1">Details</a>
+                                                <a asp-area="admin" asp-controller="slider" asp-action="update" asp-route-id="@slider.Id" class="btn btn-warning rounded my-1">Update</a>
+                                                <a asp-area="admin" asp-controller="slider" asp-action="delete" asp-route-id="@slider.Id" class="btn btn-danger rounded my-1">Delete</a>
+                                            </td>
+                                        </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
